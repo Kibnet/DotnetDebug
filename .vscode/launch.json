@@ -9,6 +9,15 @@
             "type": "dotnet",
             "request": "launch",
             "projectPath": "${workspaceFolder}/src/DotnetDebug/DotnetDebug.csproj"
+        },
+        {
+            "name": "C#: Dotnet Debug (MCP CoreCLR)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/DotnetDebug/bin/Debug/net10.0/DotnetDebug.dll",
+            "cwd": "${workspaceFolder}/src/DotnetDebug",
+            "stopAtEntry": true,
+            "preLaunchTask": "build-dotnetdebug"
         }
     ]
 }
