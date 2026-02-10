@@ -12,6 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DotnetDebug\DotnetDebug.csproj" />
+    <ProjectReference Include="..\..\src\DotnetDebug.Core\DotnetDebug.Core.csproj" />
   </ItemGroup>
 </Project>

@@ -5,4 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotnetDebug.Core\DotnetDebug.Core.csproj" />
+  </ItemGroup>
 </Project>

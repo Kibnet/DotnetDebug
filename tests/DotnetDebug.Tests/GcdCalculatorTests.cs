@@ -24,6 +24,19 @@ public class GcdCalculatorTests
     }
 
     [Test]
+    public async Task ComputeGcdWithSteps_ReturnsTrace()
+    {
+        var trace = GcdCalculator.ComputeGcdWithSteps(new long[] { 48, 18 });
+
+        await Assert.That(trace.Result).IsEqualTo(6L);
+        await Assert.That(trace.PairComputations.Count).IsEqualTo(2);
+        await Assert.That(trace.PairComputations[1].Left).IsEqualTo(48L);
+        await Assert.That(trace.PairComputations[1].Right).IsEqualTo(18L);
+        await Assert.That(trace.PairComputations[1].Result).IsEqualTo(6L);
+        await Assert.That(trace.PairComputations[1].Steps.Count).IsEqualTo(3);
+    }
+
+    [Test]
     public async Task ComputeGcd_AllZeros_Throws()
     {
         await Assert.That(() => GcdCalculator.ComputeGcd(new long[] { 0, 0, 0 }))

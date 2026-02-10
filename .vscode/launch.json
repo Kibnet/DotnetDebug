@@ -36,6 +36,15 @@
             ],
             "stopAtEntry": false,
             "preLaunchTask": "build-dotnetdebug-tests"
+        },
+        {
+            "name": "C#: Dotnet Debug Avalonia (MCP CoreCLR)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/DotnetDebug.Avalonia/bin/Debug/net9.0/DotnetDebug.Avalonia.dll",
+            "cwd": "${workspaceFolder}/src/DotnetDebug.Avalonia",
+            "stopAtEntry": false,
+            "preLaunchTask": "build-dotnetdebug-avalonia"
         }
     ]
 }
