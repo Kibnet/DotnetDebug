@@ -1,20 +1,16 @@
-# AGENTS Instructions for `DotnetDebug`
+# AGENTS Instructions
 
-## MCP Debugging (Killer Bug)
-- Always use MCP server `killer-bug-dotnetdebug` at `http://localhost:3101/mcp`.
-- Prefer launching debug with config name: `C#: Dotnet Debug (MCP CoreCLR)`.
-- Do **not** modify `launch.json` for routine debugging, except to update `args` for `C#: Dotnet Debug (MCP CoreCLR)` when a run requires specific command-line parameters.
+## Scope
+This file defines agent routing rules. It intentionally does not duplicate debugging procedures.
 
-## Required Debug Workflow
-1. Check MCP health: `Invoke-WebRequest http://localhost:3101/health -UseBasicParsing`.
-2. Start with config via MCP tool `debug_startWithConfig` and `configName = "C#: Dotnet Debug (MCP CoreCLR)"`.
-3. Inspect runtime data (`debug_getStackTrace`, `debug_getVariables`, `debug_evaluate`).
-4. End with `debug_stop`.
+## Debugging Rule
+- For any runtime/test debugging task in a .NET + CoreCLR + VS Code MCP setup, use `DEBUG_RUNBOOK.md` as the single source of truth.
+- Apply the runbook when the request includes at least one of:
+  - launch/start debugging;
+  - inspect stack/variables/evaluate expressions;
+  - set/remove breakpoints;
+  - debug failing tests;
+  - troubleshoot MCP debug session issues.
 
-## If MCP Tool Handshake Fails
-- Use direct JSON-RPC calls to `http://localhost:3101/mcp` from PowerShell (`tools/list`, `tools/call`).
-- Keep using the same config name `C#: Dotnet Debug (MCP CoreCLR)`.
-
-## Notes
-- `stopAtEntry: true` is enabled in the MCP profile to inspect `args` immediately at startup.
-- Build happens automatically via VS Code task `build-dotnetdebug` (`preLaunchTask` in launch config).
+## Non-Debug Tasks
+- For non-debug tasks (code edits, refactors, docs, build/test without debugger), `DEBUG_RUNBOOK.md` is optional and should not drive the workflow.

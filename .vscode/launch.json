@@ -23,6 +23,19 @@
             ],
             "stopAtEntry": true,
             "preLaunchTask": "build-dotnetdebug"
+        },
+        {
+            "name": "C#: Dotnet Tests Debug (MCP CoreCLR)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/tests/DotnetDebug.Tests/bin/Debug/net10.0/DotnetDebug.Tests.exe",
+            "cwd": "${workspaceFolder}/tests/DotnetDebug.Tests",
+            "args": [
+                "--filter-uid",
+                "<global namespace>.GcdCalculatorTests.1.1.ComputeGcd_TwoNumbers(System.Int64, System.Int64, System.Int64).3.1.0"
+            ],
+            "stopAtEntry": false,
+            "preLaunchTask": "build-dotnetdebug-tests"
         }
     ]
 }
