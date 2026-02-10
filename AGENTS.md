@@ -3,7 +3,7 @@
 ## MCP Debugging (Killer Bug)
 - Always use MCP server `killer-bug-dotnetdebug` at `http://localhost:3101/mcp`.
 - Prefer launching debug with config name: `C#: Dotnet Debug (MCP CoreCLR)`.
-- Do **not** modify `launch.json` for routine debugging; the project is preconfigured.
+- Do **not** modify `launch.json` for routine debugging, except to update `args` for `C#: Dotnet Debug (MCP CoreCLR)` when a run requires specific command-line parameters.
 
 ## Required Debug Workflow
 1. Check MCP health: `Invoke-WebRequest http://localhost:3101/health -UseBasicParsing`.

@@ -16,6 +16,11 @@
             "request": "launch",
             "program": "${workspaceFolder}/src/DotnetDebug/bin/Debug/net10.0/DotnetDebug.dll",
             "cwd": "${workspaceFolder}/src/DotnetDebug",
+            "args": [
+                "12",
+                "18",
+                "30"
+            ],
             "stopAtEntry": true,
             "preLaunchTask": "build-dotnetdebug"
         }
