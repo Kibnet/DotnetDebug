@@ -20,7 +20,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
-            <Button Content="Calculate" Click="OnCalculateClick" />
+            <Button x:Name="CalculateButton" Content="Calculate" Click="OnCalculateClick" />
             <TextBlock x:Name="ResultText" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" />
         </StackPanel>
 

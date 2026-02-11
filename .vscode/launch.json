@@ -45,6 +45,15 @@
             "cwd": "${workspaceFolder}/src/DotnetDebug.Avalonia",
             "stopAtEntry": false,
             "preLaunchTask": "build-dotnetdebug-avalonia"
+        },
+        {
+            "name": "C#: Dotnet UI Tests Debug (MCP CoreCLR)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/tests/DotnetDebug.UiTests.FlaUI/bin/Debug/net10.0-windows7.0/DotnetDebug.UiTests.FlaUI.exe",
+            "cwd": "${workspaceFolder}/tests/DotnetDebug.UiTests.FlaUI",
+            "stopAtEntry": false,
+            "preLaunchTask": "build-dotnetdebug-uitests-flaui"
         }
     ]
 }

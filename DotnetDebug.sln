@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetDebug.Core", "src\Dot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetDebug.Avalonia", "src\DotnetDebug.Avalonia\DotnetDebug.Avalonia.csproj", "{170DE045-508C-4EFE-90E8-998D9EECCBFD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetDebug.UiTests.FlaUI", "tests\DotnetDebug.UiTests.FlaUI\DotnetDebug.UiTests.FlaUI.csproj", "{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +75,18 @@ Global
 		{170DE045-508C-4EFE-90E8-998D9EECCBFD}.Release|x64.Build.0 = Release|Any CPU
 		{170DE045-508C-4EFE-90E8-998D9EECCBFD}.Release|x86.ActiveCfg = Release|Any CPU
 		{170DE045-508C-4EFE-90E8-998D9EECCBFD}.Release|x86.Build.0 = Release|Any CPU
+		{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298}.Debug|x64.Build.0 = Debug|Any CPU
+		{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298}.Debug|x86.Build.0 = Debug|Any CPU
+		{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298}.Release|x64.ActiveCfg = Release|Any CPU
+		{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298}.Release|x64.Build.0 = Release|Any CPU
+		{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298}.Release|x86.ActiveCfg = Release|Any CPU
+		{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,5 +94,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{458EA032-87AF-4837-8566-E855D3B23868} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{170DE045-508C-4EFE-90E8-998D9EECCBFD} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal
