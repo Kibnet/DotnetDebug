@@ -48,6 +48,18 @@
         "Debug"
       ],
       "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build-dotnetdebug-uitests-uiautomationtestkit",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "${workspaceFolder}/tests/DotnetDebug.UiTests.UIAutomationTestKit/DotnetDebug.UiTests.UIAutomationTestKit.csproj",
+        "-c",
+        "Debug"
+      ],
+      "problemMatcher": "$msCompile"
     }
   ]
 }

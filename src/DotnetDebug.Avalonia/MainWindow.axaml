@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:automation="clr-namespace:Avalonia.Automation;assembly=Avalonia.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="DotnetDebug.Avalonia.MainWindow"
         Title="DotnetDebug - GCD Visualizer"
@@ -13,6 +14,7 @@
         <StackPanel Grid.Row="1" Spacing="6">
             <TextBlock Text="Enter integers separated by spaces, commas, or new lines:" />
             <TextBox x:Name="NumbersInput"
+                     automation:AutomationProperties.AutomationId="NumbersInput"
                      AcceptsReturn="True"
                      MinHeight="96"
                      TextWrapping="Wrap"
@@ -20,14 +22,25 @@
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
-            <Button x:Name="CalculateButton" Content="Calculate" Click="OnCalculateClick" />
-            <TextBlock x:Name="ResultText" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" />
+            <Button x:Name="CalculateButton"
+                    automation:AutomationProperties.AutomationId="CalculateButton"
+                    Content="Calculate"
+                    Click="OnCalculateClick" />
+            <TextBlock x:Name="ResultText"
+                       automation:AutomationProperties.AutomationId="ResultText"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       VerticalAlignment="Center" />
         </StackPanel>
 
         <Border Grid.Row="3" BorderBrush="#444444" BorderThickness="1" CornerRadius="6" Padding="8">
-            <ListBox x:Name="StepsList" />
+            <ListBox x:Name="StepsList" automation:AutomationProperties.AutomationId="StepsList" />
         </Border>
 
-        <TextBlock Grid.Row="4" x:Name="ErrorText" Foreground="#C62828" FontWeight="SemiBold" />
+        <TextBlock Grid.Row="4"
+                   x:Name="ErrorText"
+                   automation:AutomationProperties.AutomationId="ErrorText"
+                   Foreground="#C62828"
+                   FontWeight="SemiBold" />
     </Grid>
 </Window>

@@ -5,13 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "C#: Dotnet Debug",
+            "name": "C#: Dotnet Console Debug",
             "type": "dotnet",
             "request": "launch",
             "projectPath": "${workspaceFolder}/src/DotnetDebug/DotnetDebug.csproj"
         },
         {
-            "name": "C#: Dotnet Debug (MCP CoreCLR)",
+            "name": "C#: Dotnet Console Debug (MCP CoreCLR)",
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/src/DotnetDebug/bin/Debug/net10.0/DotnetDebug.dll",
@@ -25,7 +25,16 @@
             "preLaunchTask": "build-dotnetdebug"
         },
         {
-            "name": "C#: Dotnet Tests Debug (MCP CoreCLR)",
+            "name": "C#: Dotnet Avalonia Debug (MCP CoreCLR)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/DotnetDebug.Avalonia/bin/Debug/net9.0/DotnetDebug.Avalonia.dll",
+            "cwd": "${workspaceFolder}/src/DotnetDebug.Avalonia",
+            "stopAtEntry": false,
+            "preLaunchTask": "build-dotnetdebug-avalonia"
+        },
+        {
+            "name": "C#: Dotnet Unit Tests Debug (MCP CoreCLR)",
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/tests/DotnetDebug.Tests/bin/Debug/net10.0/DotnetDebug.Tests.exe",
@@ -38,22 +47,22 @@
             "preLaunchTask": "build-dotnetdebug-tests"
         },
         {
-            "name": "C#: Dotnet Debug Avalonia (MCP CoreCLR)",
-            "type": "coreclr",
-            "request": "launch",
-            "program": "${workspaceFolder}/src/DotnetDebug.Avalonia/bin/Debug/net9.0/DotnetDebug.Avalonia.dll",
-            "cwd": "${workspaceFolder}/src/DotnetDebug.Avalonia",
-            "stopAtEntry": false,
-            "preLaunchTask": "build-dotnetdebug-avalonia"
-        },
-        {
-            "name": "C#: Dotnet UI Tests Debug (MCP CoreCLR)",
+            "name": "C#: Dotnet UI Tests FlaUI Debug (MCP CoreCLR)",
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/tests/DotnetDebug.UiTests.FlaUI/bin/Debug/net10.0-windows7.0/DotnetDebug.UiTests.FlaUI.exe",
             "cwd": "${workspaceFolder}/tests/DotnetDebug.UiTests.FlaUI",
             "stopAtEntry": false,
             "preLaunchTask": "build-dotnetdebug-uitests-flaui"
+        },
+        {
+            "name": "C#: Dotnet UI Tests UIAutomationTestKit Debug (MCP CoreCLR)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/tests/DotnetDebug.UiTests.UIAutomationTestKit/bin/Debug/net10.0-windows7.0/DotnetDebug.UiTests.UIAutomationTestKit.exe",
+            "cwd": "${workspaceFolder}/tests/DotnetDebug.UiTests.UIAutomationTestKit",
+            "stopAtEntry": false,
+            "preLaunchTask": "build-dotnetdebug-uitests-uiautomationtestkit"
         }
     ]
 }
