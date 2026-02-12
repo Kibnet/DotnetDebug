@@ -13,10 +13,27 @@ using TUnit.Core;
 
 public class DesktopAppUiTests
 {
+    private const string DesktopUiConstraint = "DesktopUi";
+    private DesktopAppSession? _session;
+
+    [Before(Test)]
+    public void Setup()
+    {
+        _session = DesktopAppSession.Start();
+    }
+
+    [After(Test)]
+    public void Cleanup()
+    {
+        _session?.Dispose();
+        _session = null;
+    }
+
     [Test]
+    [NotInParallel(DesktopUiConstraint)]
     public async Task Calculate_ValidInput_ShowsResultAndSteps()
     {
-        using var session = DesktopAppSession.Start();
+        var session = GetSession();
 
         session.EnterNumbers("48 18 30");
         session.ClickCalculate();
@@ -24,20 +41,29 @@ public class DesktopAppUiTests
         var resultText = session.WaitForText("GCD = 6", TimeSpan.FromSeconds(10));
         var stepsCount = session.GetStepItems().Length;
 
-        await Assert.That(resultText).IsEqualTo("GCD = 6");
-        await Assert.That(stepsCount > 0).IsEqualTo(true);
+        using (Assert.Multiple())
+        {
+            await Assert.That(resultText).IsEqualTo("GCD = 6");
+            await Assert.That(stepsCount).IsGreaterThan(0);
+        }
     }
 
     [Test]
+    [NotInParallel(DesktopUiConstraint)]
     public async Task Calculate_InvalidInput_ShowsValidationError()
     {
-        using var session = DesktopAppSession.Start();
+        var session = GetSession();
 
         session.EnterNumbers("48 x 30");
         session.ClickCalculate();
 
         var errorText = session.WaitForText("Invalid integer: x", TimeSpan.FromSeconds(10));
         await Assert.That(errorText).IsEqualTo("Invalid integer: x");
+    }
+
+    private DesktopAppSession GetSession()
+    {
+        return _session ?? throw new InvalidOperationException("Desktop app session was not initialized.");
     }
 
     private sealed class DesktopAppSession : IDisposable

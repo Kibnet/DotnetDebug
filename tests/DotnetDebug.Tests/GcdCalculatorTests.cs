@@ -1,7 +1,6 @@
 using System;
 using DotnetDebug;
 using TUnit.Assertions;
-using TUnit.Assertions.Extensions;
 using TUnit.Core;
 
 public class GcdCalculatorTests
@@ -19,27 +18,30 @@ public class GcdCalculatorTests
     [Test]
     public async Task ComputeGcd_MultipleNumbers()
     {
-        var result = GcdCalculator.ComputeGcd(new long[] { 48, 18, 30 });
+        var result = GcdCalculator.ComputeGcd([48, 18, 30]);
         await Assert.That(result).IsEqualTo(6L);
     }
 
     [Test]
     public async Task ComputeGcdWithSteps_ReturnsTrace()
     {
-        var trace = GcdCalculator.ComputeGcdWithSteps(new long[] { 48, 18 });
+        var trace = GcdCalculator.ComputeGcdWithSteps([48, 18]);
 
-        await Assert.That(trace.Result).IsEqualTo(6L);
-        await Assert.That(trace.PairComputations.Count).IsEqualTo(2);
-        await Assert.That(trace.PairComputations[1].Left).IsEqualTo(48L);
-        await Assert.That(trace.PairComputations[1].Right).IsEqualTo(18L);
-        await Assert.That(trace.PairComputations[1].Result).IsEqualTo(6L);
-        await Assert.That(trace.PairComputations[1].Steps.Count).IsEqualTo(3);
+        using (Assert.Multiple())
+        {
+            await Assert.That(trace.Result).IsEqualTo(6L);
+            await Assert.That(trace.PairComputations.Count).IsEqualTo(2);
+            await Assert.That(trace.PairComputations[1].Left).IsEqualTo(48L);
+            await Assert.That(trace.PairComputations[1].Right).IsEqualTo(18L);
+            await Assert.That(trace.PairComputations[1].Result).IsEqualTo(6L);
+            await Assert.That(trace.PairComputations[1].Steps.Count).IsEqualTo(3);
+        }
     }
 
     [Test]
     public async Task ComputeGcd_AllZeros_Throws()
     {
-        await Assert.That(() => GcdCalculator.ComputeGcd(new long[] { 0, 0, 0 }))
+        await Assert.That(() => GcdCalculator.ComputeGcd([0, 0, 0]))
             .Throws<ArgumentException>();
     }
 

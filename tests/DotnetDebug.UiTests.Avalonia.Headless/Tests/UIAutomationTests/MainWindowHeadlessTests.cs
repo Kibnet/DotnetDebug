@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Headless;
 using Avalonia.Interactivity;
 using DotnetDebug.Avalonia;
+using DotnetDebug.UiTests.Avalonia.Headless.Infrastructure;
 using TUnit.Assertions;
 using TUnit.Core;
 
@@ -9,49 +10,39 @@ namespace DotnetDebug.UiTests.Avalonia.Headless.Tests.UIAutomationTests;
 
 public sealed class MainWindowHeadlessTests
 {
-    private static readonly SemaphoreSlim UiTestGate = new(1, 1);
-    private static readonly Lazy<HeadlessUnitTestSession> SharedSession = new(
-        () => HeadlessUnitTestSession.StartNew(typeof(App)));
+    private const string HeadlessUiConstraint = "AvaloniaHeadlessUi";
 
     [Test]
+    [NotInParallel(HeadlessUiConstraint)]
     public async Task Calculate_ValidInput_ShowsResultAndSteps()
     {
-        await UiTestGate.WaitAsync();
-        try
-        {
-            var state = await RunScenarioAsync("48 18 30");
+        var state = await RunScenarioAsync("48 18 30");
 
+        using (Assert.Multiple())
+        {
             await Assert.That(state.ResultText).IsEqualTo("GCD = 6");
             await Assert.That(state.ErrorText).IsEqualTo(string.Empty);
             await Assert.That(state.StepsCount).IsGreaterThan(0);
         }
-        finally
-        {
-            UiTestGate.Release();
-        }
     }
 
     [Test]
+    [NotInParallel(HeadlessUiConstraint)]
     public async Task Calculate_InvalidInput_ShowsValidationError()
     {
-        await UiTestGate.WaitAsync();
-        try
-        {
-            var state = await RunScenarioAsync("48 x 30");
+        var state = await RunScenarioAsync("48 x 30");
 
+        using (Assert.Multiple())
+        {
             await Assert.That(state.ResultText).IsEqualTo(string.Empty);
             await Assert.That(state.ErrorText).IsEqualTo("Invalid integer: x");
             await Assert.That(state.StepsCount).IsEqualTo(0);
-        }
-        finally
-        {
-            UiTestGate.Release();
         }
     }
 
     private static async Task<MainWindowState> RunScenarioAsync(string input)
     {
-        return await SharedSession.Value.Dispatch(() =>
+        return await HeadlessSessionHooks.Session.Dispatch(() =>
         {
             var mainWindow = new MainWindow();
             mainWindow.Show();

@@ -1,58 +1,65 @@
 using DotnetDebug.UiTests.UIAutomationTestKit.Clients;
-using FlaUI.EasyUse.TUnit;
+using DotnetDebug.UiTests.UIAutomationTestKit.Controllers;
+using TUnit.Assertions;
 using TUnit.Core;
 
 namespace DotnetDebug.UiTests.UIAutomationTestKit.Tests.UIAutomationTests;
 
 public sealed class MainWindowUiAutomationTestKitTests
 {
-    private static readonly SemaphoreSlim UiTestGate = new(1, 1);
+    private const string DesktopUiConstraint = "DesktopUi";
+    private AutomationTestClient? _testClient;
+    private MainWindowController? _mainWindow;
+
+    [Before(Test)]
+    public void Setup()
+    {
+        _testClient = new AutomationTestClient();
+        _mainWindow = _testClient.Start(TimeSpan.FromSeconds(20));
+    }
+
+    [After(Test)]
+    public void Cleanup()
+    {
+        _testClient?.Dispose();
+        _testClient = null;
+        _mainWindow = null;
+    }
 
     [Test]
+    [NotInParallel(DesktopUiConstraint)]
     public async Task Calculate_ValidInput_ShowsResultAndSteps()
     {
-        await UiTestGate.WaitAsync();
-        try
-        {
-            using var testClient = new AutomationTestClient();
-            var mainWindow = testClient.Start(TimeSpan.FromSeconds(20));
+        MainWindow
+            .SetNumbers("48 18 30")
+            .ClickCalculate()
+            .WaitUntilResultEquals("GCD = 6")
+            .WaitUntilStepsCountAtLeast(1);
 
-            mainWindow
-                .SetNumbers("48 18 30")
-                .ClickCalculate()
-                .WaitUntilResultEquals("GCD = 6")
-                .WaitUntilStepsCountAtLeast(1);
-
-            await UiAssert.TextEqualsAsync(mainWindow.GetResultText, "GCD = 6");
-            await UiAssert.NumberAtLeastAsync(mainWindow.GetStepsCount, 1);
-            await UiAssert.TextEqualsAsync(mainWindow.GetErrorText, string.Empty);
-        }
-        finally
+        using (Assert.Multiple())
         {
-            UiTestGate.Release();
+            await Assert.That(MainWindow.GetResultText()).IsEqualTo("GCD = 6");
+            await Assert.That(MainWindow.GetStepsCount()).IsGreaterThanOrEqualTo(1);
+            await Assert.That(MainWindow.GetErrorText()).IsEqualTo(string.Empty);
         }
     }
 
     [Test]
+    [NotInParallel(DesktopUiConstraint)]
     public async Task Calculate_InvalidInput_ShowsValidationError()
     {
-        await UiTestGate.WaitAsync();
-        try
-        {
-            using var testClient = new AutomationTestClient();
-            var mainWindow = testClient.Start(TimeSpan.FromSeconds(20));
+        MainWindow
+            .SetNumbers("48 x 30")
+            .ClickCalculate()
+            .WaitUntilErrorContains("Invalid integer: x");
 
-            mainWindow
-                .SetNumbers("48 x 30")
-                .ClickCalculate()
-                .WaitUntilErrorContains("Invalid integer: x");
-
-            await UiAssert.TextContainsAsync(mainWindow.GetErrorText, "Invalid integer: x");
-            await UiAssert.TextEqualsAsync(mainWindow.GetResultText, string.Empty);
-        }
-        finally
+        using (Assert.Multiple())
         {
-            UiTestGate.Release();
+            await Assert.That(MainWindow.GetErrorText()).Contains("Invalid integer: x");
+            await Assert.That(MainWindow.GetResultText()).IsEqualTo(string.Empty);
         }
     }
+
+    private MainWindowController MainWindow =>
+        _mainWindow ?? throw new InvalidOperationException("Main window was not initialized.");
 }
