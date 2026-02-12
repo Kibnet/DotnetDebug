@@ -3,6 +3,8 @@
 ## Purpose
 Portable playbook for debugging .NET applications and tests through an MCP debug server with CoreCLR launch profiles in VS Code.
 
+`<MCP_BASE_URL>` you can find in `.vscode\mcp.json`
+
 ## Prerequisites
 1. MCP debug server is running and exposes:
    - health endpoint: `<MCP_BASE_URL>/health`
