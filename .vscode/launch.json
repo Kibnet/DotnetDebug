@@ -56,17 +56,17 @@
             "preLaunchTask": "build-dotnetdebug-uitests-flaui"
         },
         {
-            "name": "C#: Dotnet UI Tests UIAutomationTestKit Debug (MCP CoreCLR)",
+            "name": "C#: Dotnet UI Tests FlaUI.EasyUse Debug (MCP CoreCLR)",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/tests/DotnetDebug.UiTests.UIAutomationTestKit/bin/Debug/net10.0-windows7.0/DotnetDebug.UiTests.UIAutomationTestKit.exe",
-            "cwd": "${workspaceFolder}/tests/DotnetDebug.UiTests.UIAutomationTestKit",
+            "program": "${workspaceFolder}/tests/DotnetDebug.UiTests.FlaUI.EasyUse/bin/Debug/net10.0-windows7.0/DotnetDebug.UiTests.FlaUI.EasyUse.exe",
+            "cwd": "${workspaceFolder}/tests/DotnetDebug.UiTests.FlaUI.EasyUse",
             "args": [
                 "--filter-uid",
-                "DotnetDebug.UiTests.UIAutomationTestKit.Tests.UIAutomationTests.MainWindowUiAutomationTestKitTests.1.1.Calculate_ValidInput_ShowsResultAndSteps.1.1.0"
+                "DotnetDebug.UiTests.FlaUI.EasyUse.Tests.UIAutomationTests.MainWindowFlaUIEasyUseTests.1.1.Calculate_ValidInput_ShowsResultAndSteps.1.1.0"
             ],
             "stopAtEntry": false,
-            "preLaunchTask": "build-dotnetdebug-uitests-uiautomationtestkit"
+            "preLaunchTask": "build-dotnetdebug-uitests-flaui-easyuse"
         }
     ]
 }

@@ -1,11 +1,11 @@
-using DotnetDebug.UiTests.UIAutomationTestKit.Clients;
-using DotnetDebug.UiTests.UIAutomationTestKit.Controllers;
+using DotnetDebug.UiTests.FlaUI.EasyUse.Clients;
+using DotnetDebug.UiTests.FlaUI.EasyUse.Controllers;
 using TUnit.Assertions;
 using TUnit.Core;
 
-namespace DotnetDebug.UiTests.UIAutomationTestKit.Tests.UIAutomationTests;
+namespace DotnetDebug.UiTests.FlaUI.EasyUse.Tests.UIAutomationTests;
 
-public sealed class MainWindowUiAutomationTestKitTests
+public sealed class MainWindowFlaUIEasyUseTests
 {
     private const string DesktopUiConstraint = "DesktopUi";
     private AutomationTestClient? _testClient;

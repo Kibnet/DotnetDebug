@@ -1,9 +1,9 @@
 using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
-using DotnetDebug.UiTests.UIAutomationTestKit.Locators;
+using DotnetDebug.UiTests.FlaUI.EasyUse.Locators;
 using FlaUI.EasyUse.Extensions;
 
-namespace DotnetDebug.UiTests.UIAutomationTestKit.Controllers;
+namespace DotnetDebug.UiTests.FlaUI.EasyUse.Controllers;
 
 public sealed class MainWindowController
 {

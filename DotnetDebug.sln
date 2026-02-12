@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetDebug.UiTests.FlaUI", "tests\DotnetDebug.UiTests.FlaUI\DotnetDebug.UiTests.FlaUI.csproj", "{27A1A160-D7D5-4AD5-B78C-8C72E6C0D298}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetDebug.UiTests.UIAutomationTestKit", "tests\DotnetDebug.UiTests.UIAutomationTestKit\DotnetDebug.UiTests.UIAutomationTestKit.csproj", "{35FDD3D3-B108-4238-8FAD-FDAE9C1D59D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetDebug.UiTests.FlaUI.EasyUse", "tests\DotnetDebug.UiTests.FlaUI.EasyUse\DotnetDebug.UiTests.FlaUI.EasyUse.csproj", "{35FDD3D3-B108-4238-8FAD-FDAE9C1D59D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlaUI.EasyUse", "src\FlaUI.EasyUse\FlaUI.EasyUse.csproj", "{0B74C4FC-0716-478C-8303-173E038802CC}"
 EndProject

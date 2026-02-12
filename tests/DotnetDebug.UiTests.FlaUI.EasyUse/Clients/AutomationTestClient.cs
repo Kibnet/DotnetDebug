@@ -1,8 +1,8 @@
 using System.Diagnostics;
-using DotnetDebug.UiTests.UIAutomationTestKit.Controllers;
+using DotnetDebug.UiTests.FlaUI.EasyUse.Controllers;
 using FlaUI.EasyUse.Session;
 
-namespace DotnetDebug.UiTests.UIAutomationTestKit.Clients;
+namespace DotnetDebug.UiTests.FlaUI.EasyUse.Clients;
 
 internal sealed class AutomationTestClient : IDisposable
 {

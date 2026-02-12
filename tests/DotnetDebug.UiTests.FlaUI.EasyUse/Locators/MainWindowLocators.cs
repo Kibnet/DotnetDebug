@@ -2,7 +2,7 @@ using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
 using FlaUI.Core.Exceptions;
 
-namespace DotnetDebug.UiTests.UIAutomationTestKit.Locators;
+namespace DotnetDebug.UiTests.FlaUI.EasyUse.Locators;
 
 internal sealed class MainWindowLocators
 {

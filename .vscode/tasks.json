@@ -50,12 +50,12 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "build-dotnetdebug-uitests-uiautomationtestkit",
+      "label": "build-dotnetdebug-uitests-flaui-easyuse",
       "type": "process",
       "command": "dotnet",
       "args": [
         "build",
-        "${workspaceFolder}/tests/DotnetDebug.UiTests.UIAutomationTestKit/DotnetDebug.UiTests.UIAutomationTestKit.csproj",
+        "${workspaceFolder}/tests/DotnetDebug.UiTests.FlaUI.EasyUse/DotnetDebug.UiTests.FlaUI.EasyUse.csproj",
         "-c",
         "Debug"
       ],
