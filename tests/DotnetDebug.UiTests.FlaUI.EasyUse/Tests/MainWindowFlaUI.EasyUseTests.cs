@@ -1,4 +1,5 @@
 using DotnetDebug.UiTests.FlaUI.EasyUse.Pages;
+using FlaUI.EasyUse.Extensions;
 using FlaUI.EasyUse.Session;
 using FlaUI.EasyUse.TUnit;
 using TUnit.Assertions;
@@ -29,10 +30,10 @@ public sealed class MainWindowFlaUIEasyUseTests : DesktopUiTestBase<MainWindowPa
     public async Task Calculate_ValidInput_ShowsResultAndSteps()
     {
         Page
-            .SetNumbers("48 18 30")
-            .ClickCalculate()
-            .WaitUntilResultEquals("GCD = 6")
-            .WaitUntilStepsCountAtLeast(1);
+            .EnterText(p => p.NumbersInput, "48 18 30")
+            .ClickButton(p => p.CalculateButton)
+            .WaitUntilNameEquals(p => p.ResultText, "GCD = 6")
+            .WaitUntilHasItemsAtLeast(p => p.StepsList, 1);
 
         using (Assert.Multiple())
         {
@@ -47,9 +48,9 @@ public sealed class MainWindowFlaUIEasyUseTests : DesktopUiTestBase<MainWindowPa
     public async Task Calculate_InvalidInput_ShowsValidationError()
     {
         Page
-            .SetNumbers("48 x 30")
-            .ClickCalculate()
-            .WaitUntilErrorContains("Invalid integer: x");
+            .EnterText(p => p.NumbersInput, "48 x 30")
+            .ClickButton(p => p.CalculateButton)
+            .WaitUntilNameContains(p => p.ErrorText, "Invalid integer: x");
 
         using (Assert.Multiple())
         {
