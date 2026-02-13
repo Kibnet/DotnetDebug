@@ -2,7 +2,7 @@ namespace FlaUI.EasyUse.Session;
 
 public sealed class DesktopAppLaunchOptions
 {
-    public string ExecutablePath { get; init; } = string.Empty;
+    public required string ExecutablePath { get; init; }
 
     public string? WorkingDirectory { get; init; }
 
