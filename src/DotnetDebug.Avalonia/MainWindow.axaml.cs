@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Collections.ObjectModel;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using DotnetDebug;
@@ -11,6 +10,8 @@ namespace DotnetDebug.Avalonia;
 
 public partial class MainWindow : Window
 {
+    private readonly MainWindowViewModel _viewModel = new();
+
     private enum ComputeMode
     {
         Gcd,
@@ -28,12 +29,12 @@ public partial class MainWindow : Window
     private static readonly char[] InputSeparators = [' ', '\t', '\r', '\n', ',', ';'];
 
     private readonly List<string> _computationHistory = [];
-    private readonly ObservableCollection<DataGridRowViewModel> _dataGridRows = [];
     private string _historyFilter = string.Empty;
 
     public MainWindow()
     {
         InitializeComponent();
+        DataContext = _viewModel;
 
         UpdateModeLabel(ComputeMode.Gcd, useAbsoluteValues: false, showSteps: false);
         StartDatePicker.SelectedDate = DateTime.Today;
@@ -180,70 +181,24 @@ public partial class MainWindow : Window
 
     private void OnBuildGridClick(object? sender, RoutedEventArgs e)
     {
-        DataGridErrorText.Text = string.Empty;
-        _dataGridRows.Clear();
-        DemoDataGrid.ItemsSource = null;
-        GridSelectionLabel.Content = "No row selected";
-
         var requestedRows = ParseInputAsNonNegativeInt(DataGridRowsInput.Text, defaultValue: 8);
-        if (requestedRows <= 0)
-        {
-            DataGridErrorText.Text = "Rows must be greater than zero.";
-            return;
-        }
-
-        for (var rowIndex = 0; rowIndex < requestedRows; rowIndex++)
-        {
-            var value = rowIndex * 3 + 7;
-            _dataGridRows.Add(new DataGridRowViewModel(rowIndex, value));
-        }
-
-        DemoDataGrid.ItemsSource = _dataGridRows;
-        DemoDataGrid.SelectedItem = null;
-        GridResultLabel.Content = $"Grid rows: {_dataGridRows.Count}";
+        _viewModel.BuildGrid(requestedRows);
     }
 
     private void OnClearGridClick(object? sender, RoutedEventArgs e)
     {
-        DataGridErrorText.Text = string.Empty;
-        _dataGridRows.Clear();
-        DemoDataGrid.ItemsSource = null;
-        GridResultLabel.Content = string.Empty;
-        GridSelectionLabel.Content = "No row selected";
+        _viewModel.ClearGrid();
     }
 
     private void OnSelectGridRowClick(object? sender, RoutedEventArgs e)
     {
-        DataGridErrorText.Text = string.Empty;
-        GridSelectionLabel.Content = "No row selected";
-
-        if (_dataGridRows.Count == 0)
-        {
-            DataGridErrorText.Text = "Build grid before selecting a row.";
-            return;
-        }
-
         if (!int.TryParse(DataGridSelectRowInput.Text, NumberStyles.Integer, CultureInfo.InvariantCulture, out var selectedIndex))
         {
-            DataGridErrorText.Text = "Invalid row index.";
+            _viewModel.DataGridErrorText = "Invalid row index.";
             return;
         }
 
-        if (selectedIndex < 0 || selectedIndex >= _dataGridRows.Count)
-        {
-            DataGridErrorText.Text = $"Row index {selectedIndex} is out of range.";
-            return;
-        }
-
-        DemoDataGrid.SelectedItem = _dataGridRows[selectedIndex];
-        if (DemoDataGrid.SelectedItem is DataGridRowViewModel selectedItem)
-        {
-            GridSelectionLabel.Content = $"Selected row: {selectedItem.Row}";
-        }
-        else
-        {
-            DataGridErrorText.Text = "Unable to read selected row.";
-        }
+        _viewModel.SelectRowByIndex(selectedIndex);
     }
 
     private void OnReadCalendarClick(object? sender, RoutedEventArgs e)
@@ -659,12 +614,4 @@ public partial class MainWindow : Window
         return lines;
     }
 
-    private sealed class DataGridRowViewModel(int index, int value)
-    {
-        public string Row => $"R{index + 1}";
-
-        public string Value => value.ToString(CultureInfo.InvariantCulture);
-
-        public string Parity => value % 2 == 0 ? "Even" : "Odd";
-    }
 }
