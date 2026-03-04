@@ -63,7 +63,7 @@
             "cwd": "${workspaceFolder}/tests/DotnetDebug.UiTests.FlaUI.EasyUse",
             "args": [
                 "--filter-uid",
-                "DotnetDebug.UiTests.FlaUI.EasyUse.Tests.UIAutomationTests.MainWindowFlaUIEasyUseTests.1.1.Calculate_ValidInput_ShowsResultAndSteps.1.1.0"
+                "DotnetDebug.UiTests.FlaUI.EasyUse.Tests.UIAutomationTests.MainWindowFlaUIEasyUseTests.1.1.DataGrid_BuildSelectClear_ShowsRowsSelectionAndValidation.1.1.0"
             ],
             "stopAtEntry": false,
             "preLaunchTask": "build-dotnetdebug-uitests-flaui-easyuse"
