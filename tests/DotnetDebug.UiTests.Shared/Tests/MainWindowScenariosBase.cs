@@ -3,31 +3,14 @@ using System.Linq;
 using FlaUI.Core.Definitions;
 using DotnetDebug.UiTests.FlaUI.EasyUse.Pages;
 using FlaUI.EasyUse.Extensions;
-using FlaUI.EasyUse.Session;
 using FlaUI.EasyUse.TUnit;
 using TUnit.Assertions;
 using TUnit.Core;
 
 namespace DotnetDebug.UiTests.FlaUI.EasyUse.Tests.UIAutomationTests;
 
-public sealed class MainWindowFlaUIEasyUseTests : DesktopUiTestBase<MainWindowPage>
+public abstract class MainWindowScenariosBase : DesktopUiTestBase<MainWindowPage>
 {
-    protected override DesktopProjectLaunchOptions CreateLaunchOptions()
-    {
-        return new DesktopProjectLaunchOptions
-        {
-            SolutionFileName = "DotnetDebug.sln",
-            ProjectRelativePath = Path.Combine("src", "DotnetDebug.Avalonia", "DotnetDebug.Avalonia.csproj"),
-            BuildConfiguration = "Debug",
-            TargetFramework = "net9.0"
-        };
-    }
-
-    protected override MainWindowPage CreatePage(DesktopAppSession session)
-    {
-        return new MainWindowPage(session.MainWindow, session.ConditionFactory);
-    }
-
     [Test]
     [NotInParallel(DesktopUiConstraint)]
     public async Task Calculate_Gcd_WithDefaultSettings_ShowsResultStepsAndHistory()

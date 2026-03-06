@@ -23,8 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\DotnetDebug.UiTests.Avalonia.Headless\Pages\MainWindowPage.cs" Link="Pages\MainWindowPage.cs" />
-    <Compile Include="..\DotnetDebug.UiTests.Avalonia.Headless\Tests\MainWindowFlaUI.EasyUseTests.cs" Link="Tests\MainWindowFlaUI.EasyUseTests.cs" />
+    <Compile Include="..\DotnetDebug.UiTests.Shared\**\*.cs" />
   </ItemGroup>
 
 </Project>

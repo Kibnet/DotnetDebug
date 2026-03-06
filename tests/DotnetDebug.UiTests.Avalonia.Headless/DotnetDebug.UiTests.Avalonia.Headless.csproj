@@ -20,4 +20,8 @@
     <ProjectReference Include="..\..\src\DotnetDebug.Avalonia\DotnetDebug.Avalonia.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\DotnetDebug.UiTests.Shared\**\*.cs" />
+  </ItemGroup>
+
 </Project>
