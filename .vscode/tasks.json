@@ -38,24 +38,12 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "build-dotnetdebug-uitests-flaui",
+      "label": "build-dotnetdebug-appautomation-flaui-tests",
       "type": "process",
       "command": "dotnet",
       "args": [
         "build",
-        "${workspaceFolder}/tests/DotnetDebug.UiTests.FlaUI/DotnetDebug.UiTests.FlaUI.csproj",
-        "-c",
-        "Debug"
-      ],
-      "problemMatcher": "$msCompile"
-    },
-    {
-      "label": "build-dotnetdebug-uitests-flaui-easyuse",
-      "type": "process",
-      "command": "dotnet",
-      "args": [
-        "build",
-        "${workspaceFolder}/tests/DotnetDebug.UiTests.FlaUI.EasyUse/DotnetDebug.UiTests.FlaUI.EasyUse.csproj",
+        "${workspaceFolder}/tests/DotnetDebug.AppAutomation.FlaUI.Tests/DotnetDebug.AppAutomation.FlaUI.Tests.csproj",
         "-c",
         "Debug"
       ],

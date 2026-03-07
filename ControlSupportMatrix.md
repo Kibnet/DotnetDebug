@@ -1,4 +1,4 @@
-# Control Support Matrix (FlaUI.EasyUse + Avalonia demo)
+# Control Support Matrix (AppAutomation + Avalonia demo)
 
 Цель: быстро понять, какие контролы из существующего showcase уже имеют
 фабрично типизированную поддержку, какие идут через fallback и что нужно делать
@@ -6,16 +6,16 @@
 
 ## Источник статуса
 
-- Типы контролов в DSL определяются в `src/FlaUI.EasyUse/PageObjects/UiControlType.cs`
+- Типы контролов в DSL определяются в `src/AppAutomation.Abstractions/UiControlType.cs`
 - Автоматическое связывание `UiControlAttribute -> свойство` генерируется
-  `src/FlaUI.EasyUse.Generators/UiControlSourceGenerator.cs`
+  `src/AppAutomation.Authoring/UiControlSourceGenerator.cs`
 - Реальные контролы страницы тестового приложения в
-  `tests/DotnetDebug.UiTests.FlaUI.EasyUse/Pages/MainWindowPage.cs`
-- Реальные действия/ожидания в `src/FlaUI.EasyUse/Extensions/*`
+  `tests/DotnetDebug.AppAutomation.Authoring/Pages/MainWindowPage.cs`
+- Реальные действия/ожидания в `src/AppAutomation.FlaUI/Extensions/*`
 
 ## Что сейчас покрыто в demo (готово для сценариев в тестах)
 
-| Контрол | Avalonia в MainWindow | UiControlType | Уровень поддержки в EasyUse | Комментарий |
+| Контрол | Avalonia в MainWindow | UiControlType | Уровень поддержки в AppAutomation | Комментарий |
 |---|---|---|---|---|
 | TextInput | `NumbersInput`, `MixInput`, `HistoryFilterInput`, `MixCountSpinner` | `TextBox` | полная | Через `EnterText`, чтение/запись значения |
 | Button | `CalculateButton`, `ApplyFilterButton`, ... | `Button` | полная | Через `ClickButton` |
@@ -61,4 +61,3 @@
    - методы/ожидания в `UiPageExtensions` + `AutomationElementWaitExtensions` только при необходимости,
    - хотя бы 1-2 бизнес-сценария и связанные тесты в `...EasyUseTests`.
 5. Для контролов без надёжного UIA паттерна в `FlaUI.Core` фиксировать статус как `Fallback/Нестабильный` и покрывать только устойчивые проверки (`Name`/`Text`, `Availability`, `Enable/Selection`).
-

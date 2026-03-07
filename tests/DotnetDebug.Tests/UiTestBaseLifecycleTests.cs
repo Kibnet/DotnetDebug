@@ -1,4 +1,4 @@
-using EasyUse.TUnit.Core;
+using AppAutomation.TUnit;
 using TUnit.Assertions;
 using TUnit.Core;
 

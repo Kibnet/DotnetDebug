@@ -1,4 +1,4 @@
-using EasyUse.Automation.Abstractions;
+using AppAutomation.Abstractions;
 using TUnit.Assertions;
 using TUnit.Core;
 

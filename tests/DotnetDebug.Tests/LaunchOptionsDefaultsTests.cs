@@ -1,5 +1,5 @@
-using EasyUse.Session.Contracts;
-using EasyUse.TestHost;
+using AppAutomation.Session.Contracts;
+using DotnetDebug.AppAutomation.TestHost;
 using TUnit.Assertions;
 using TUnit.Core;
 

@@ -28,7 +28,7 @@
             "name": "C#: Dotnet Avalonia Debug (MCP CoreCLR)",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/src/DotnetDebug.Avalonia/bin/Debug/net9.0/DotnetDebug.Avalonia.dll",
+            "program": "${workspaceFolder}/src/DotnetDebug.Avalonia/bin/Debug/net10.0/DotnetDebug.Avalonia.dll",
             "cwd": "${workspaceFolder}/src/DotnetDebug.Avalonia",
             "stopAtEntry": false,
             "preLaunchTask": "build-dotnetdebug-avalonia"
@@ -47,26 +47,17 @@
             "preLaunchTask": "build-dotnetdebug-tests"
         },
         {
-            "name": "C#: Dotnet UI Tests FlaUI Debug (MCP CoreCLR)",
+            "name": "C#: Dotnet UI Tests AppAutomation.FlaUI Debug (MCP CoreCLR)",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/tests/DotnetDebug.UiTests.FlaUI/bin/Debug/net10.0-windows7.0/DotnetDebug.UiTests.FlaUI.exe",
-            "cwd": "${workspaceFolder}/tests/DotnetDebug.UiTests.FlaUI",
-            "stopAtEntry": false,
-            "preLaunchTask": "build-dotnetdebug-uitests-flaui"
-        },
-        {
-            "name": "C#: Dotnet UI Tests FlaUI.EasyUse Debug (MCP CoreCLR)",
-            "type": "coreclr",
-            "request": "launch",
-            "program": "${workspaceFolder}/tests/DotnetDebug.UiTests.FlaUI.EasyUse/bin/Debug/net10.0-windows7.0/DotnetDebug.UiTests.FlaUI.EasyUse.exe",
-            "cwd": "${workspaceFolder}/tests/DotnetDebug.UiTests.FlaUI.EasyUse",
+            "program": "${workspaceFolder}/tests/DotnetDebug.AppAutomation.FlaUI.Tests/bin/Debug/net10.0-windows7.0/DotnetDebug.AppAutomation.FlaUI.Tests.exe",
+            "cwd": "${workspaceFolder}/tests/DotnetDebug.AppAutomation.FlaUI.Tests",
             "args": [
                 "--filter-uid",
-                "DotnetDebug.UiTests.FlaUI.EasyUse.Tests.UIAutomationTests.MainWindowFlaUIEasyUseTests.1.1.DataGrid_BuildSelectClear_ShowsRowsSelectionAndValidation.1.1.0"
+                "DotnetDebug.AppAutomation.FlaUI.Tests.Tests.UIAutomationTests.MainWindowFlaUiRuntimeTests.1.1.DataGrid_BuildSelectClear_ShowsRowsSelectionAndValidation.1.1.0"
             ],
             "stopAtEntry": false,
-            "preLaunchTask": "build-dotnetdebug-uitests-flaui-easyuse"
+            "preLaunchTask": "build-dotnetdebug-appautomation-flaui-tests"
         }
     ]
 }
