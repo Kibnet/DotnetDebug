@@ -78,6 +78,45 @@ public sealed class UiPageExtensionsTests
         }
     }
 
+    [Test]
+    public async Task WaitUntilNameEquals_ThrowsUiOperationException_WhenControlReadFails()
+    {
+        var label = new ThrowingLabelControl("ResultLabel", "stale element");
+        var resolver = new FakeResolver(
+            [("ResultLabel", (object)label)],
+            artifacts:
+            [
+                new UiFailureArtifact(
+                    Kind: "logical-tree",
+                    LogicalName: "logical-tree",
+                    RelativePath: "artifacts/ui-failures/fake/logical-tree.txt",
+                    ContentType: "text/plain",
+                    IsRequiredByContract: true,
+                    InlineTextPreview: "Window -> ResultLabel")
+            ]);
+        var page = new DiagnosticsPage(resolver);
+
+        UiOperationException? exception = null;
+        try
+        {
+            page.WaitUntilNameEquals(static candidate => candidate.ResultLabel, "Expected", timeoutMs: 250);
+        }
+        catch (UiOperationException ex)
+        {
+            exception = ex;
+        }
+
+        using (Assert.Multiple())
+        {
+            await Assert.That(exception).IsNotNull();
+            await Assert.That(exception!.FailureContext.OperationName).IsEqualTo("WaitUntilNameEquals");
+            await Assert.That(exception.FailureContext.LastObservedValue).Contains("stale element");
+            await Assert.That(exception.FailureContext.Artifacts.Count).IsEqualTo(1);
+            await Assert.That(exception.Message).Contains("Operation failed before timeout");
+            await Assert.That(exception.InnerException is InvalidOperationException).IsEqualTo(true);
+        }
+    }
+
     public static class ComboPageDefinitions
     {
         public static UiControlDefinition OperationCombo { get; } = new(
@@ -175,6 +214,25 @@ public sealed class UiPageExtensionsTests
         }
 
         public string Text => Name;
+    }
+
+    private sealed class ThrowingLabelControl : ILabelControl
+    {
+        private readonly string _errorMessage;
+
+        public ThrowingLabelControl(string automationId, string errorMessage)
+        {
+            AutomationId = automationId;
+            _errorMessage = errorMessage;
+        }
+
+        public string AutomationId { get; }
+
+        public string Name => throw new InvalidOperationException(_errorMessage);
+
+        public bool IsEnabled => true;
+
+        public string Text => throw new InvalidOperationException(_errorMessage);
     }
 
     private sealed class FakeComboBoxControl : FakeControlBase, IComboBoxControl

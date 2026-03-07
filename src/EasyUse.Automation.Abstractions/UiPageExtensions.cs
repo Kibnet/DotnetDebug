@@ -508,24 +508,68 @@ public static class UiPageExtensions
         }
         catch (TimeoutException ex)
         {
-            var propertyName = TryGetPropertyName(selector);
-            var definition = TryGetControlDefinition(page.GetType(), propertyName);
-            var failureContext = new UiFailureContext(
-                OperationName: string.IsNullOrWhiteSpace(operationName) ? "UiOperation" : operationName,
-                AdapterId: page.Capabilities.AdapterId,
-                Timeout: timeout,
-                StartedAtUtc: startedAtUtc,
-                FinishedAtUtc: DateTimeOffset.UtcNow,
-                Capabilities: page.Capabilities,
-                Artifacts: Array.Empty<UiFailureArtifact>(),
-                PageTypeFullName: page.GetType().FullName,
-                ControlPropertyName: propertyName,
-                LocatorValue: definition?.LocatorValue,
-                LocatorKind: definition?.LocatorKind,
-                LastObservedValue: TryReadLastObservedValue(lastObservedValueFactory));
-            failureContext = AttachArtifacts(page, failureContext);
-            throw new UiOperationException(timeoutMessage, failureContext, ex);
+            throw CreateUiOperationException(
+                page,
+                selector,
+                timeout,
+                startedAtUtc,
+                timeoutMessage,
+                lastObservedValueFactory,
+                operationName,
+                ex);
         }
+        catch (Exception ex) when (ex is not UiOperationException and not OperationCanceledException)
+        {
+            throw CreateUiOperationException(
+                page,
+                selector,
+                timeout,
+                startedAtUtc,
+                timeoutMessage,
+                lastObservedValueFactory,
+                operationName,
+                ex);
+        }
+    }
+
+    private static UiOperationException CreateUiOperationException<TSelf, TControl>(
+        TSelf page,
+        Expression<Func<TSelf, TControl>> selector,
+        TimeSpan timeout,
+        DateTimeOffset startedAtUtc,
+        string failureMessage,
+        Func<string?>? lastObservedValueFactory,
+        string operationName,
+        Exception exception)
+        where TSelf : UiPage
+    {
+        var propertyName = TryGetPropertyName(selector);
+        var definition = TryGetControlDefinition(page.GetType(), propertyName);
+        var failureContext = new UiFailureContext(
+            OperationName: string.IsNullOrWhiteSpace(operationName) ? "UiOperation" : operationName,
+            AdapterId: page.Capabilities.AdapterId,
+            Timeout: timeout,
+            StartedAtUtc: startedAtUtc,
+            FinishedAtUtc: DateTimeOffset.UtcNow,
+            Capabilities: page.Capabilities,
+            Artifacts: Array.Empty<UiFailureArtifact>(),
+            PageTypeFullName: page.GetType().FullName,
+            ControlPropertyName: propertyName,
+            LocatorValue: definition?.LocatorValue,
+            LocatorKind: definition?.LocatorKind,
+            LastObservedValue: TryReadLastObservedValue(lastObservedValueFactory));
+        failureContext = AttachArtifacts(page, failureContext);
+        return new UiOperationException(
+            CreateUiOperationMessage(failureMessage, exception),
+            failureContext,
+            exception);
+    }
+
+    private static string CreateUiOperationMessage(string failureMessage, Exception exception)
+    {
+        return exception is TimeoutException
+            ? failureMessage
+            : $"{failureMessage} Operation failed before timeout: {exception.Message}";
     }
 
     private static UiFailureContext AttachArtifacts(UiPage page, UiFailureContext failureContext)
