@@ -1,4 +1,3 @@
-using EasyUse.Session.Contracts;
 using EasyUse.TUnit.Core;
 using TUnit.Assertions;
 using TUnit.Core;
@@ -37,18 +36,8 @@ public class UiTestBaseLifecycleTests
 
         public int CreatePageCalls { get; private set; }
 
-        protected override DesktopProjectLaunchOptions CreateLaunchOptions()
+        protected override FakeUiSession LaunchSession()
         {
-            return new DesktopProjectLaunchOptions
-            {
-                ProjectRelativePath = "src/DotnetDebug.Avalonia/DotnetDebug.Avalonia.csproj",
-                TargetFramework = "net9.0"
-            };
-        }
-
-        protected override FakeUiSession LaunchSession(DesktopProjectLaunchOptions options)
-        {
-            ArgumentNullException.ThrowIfNull(options);
             LaunchSessionCalls++;
             return new FakeUiSession();
         }

@@ -1,5 +1,6 @@
+using UiWait = EasyUse.Automation.Abstractions.UiWait;
+using UiWaitOptions = EasyUse.Automation.Abstractions.UiWaitOptions;
 using FlaUI.Core.AutomationElements;
-using FlaUI.EasyUse.Waiting;
 
 namespace FlaUI.EasyUse.Extensions;
 

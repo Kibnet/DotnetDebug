@@ -1,6 +1,8 @@
-using EasyUse.Session.Contracts;
+using DotnetDebug.UiTests.Authoring.Pages;
+using DotnetDebug.UiTests.Authoring.Tests.UIAutomationTests;
+using EasyUse.TestHost;
 using EasyUse.TUnit.Core;
-using DotnetDebug.UiTests.FlaUI.EasyUse.Pages;
+using FlaUI.EasyUse.Automation;
 using FlaUI.EasyUse.Session;
 using TUnit.Core;
 
@@ -9,25 +11,14 @@ namespace DotnetDebug.UiTests.FlaUI.EasyUse.Tests.UIAutomationTests;
 [InheritsTests]
 public sealed class MainWindowFlaUiRuntimeTests : MainWindowScenariosBase<MainWindowFlaUiRuntimeTests.FlaUiRuntimeSession>
 {
-    protected override DesktopProjectLaunchOptions CreateLaunchOptions()
+    protected override FlaUiRuntimeSession LaunchSession()
     {
-        return new DesktopProjectLaunchOptions
-        {
-            SolutionFileName = "DotnetDebug.sln",
-            ProjectRelativePath = Path.Combine("src", "DotnetDebug.Avalonia", "DotnetDebug.Avalonia.csproj"),
-            BuildConfiguration = "Debug",
-            TargetFramework = "net9.0"
-        };
-    }
-
-    protected override FlaUiRuntimeSession LaunchSession(DesktopProjectLaunchOptions options)
-    {
-        return new FlaUiRuntimeSession(DesktopAppSession.LaunchFromProject(options));
+        return new FlaUiRuntimeSession(DesktopAppSession.Launch(DotnetDebugAppLaunchHost.CreateDesktopLaunchOptions()));
     }
 
     protected override MainWindowPage CreatePage(FlaUiRuntimeSession session)
     {
-        return new MainWindowPage(session.Inner.MainWindow, session.Inner.ConditionFactory);
+        return new MainWindowPage(new FlaUiControlResolver(session.Inner.MainWindow, session.Inner.ConditionFactory));
     }
 
     public sealed class FlaUiRuntimeSession : IUiTestSession

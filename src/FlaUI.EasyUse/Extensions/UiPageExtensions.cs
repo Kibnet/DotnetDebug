@@ -2,13 +2,14 @@ using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using UiWait = EasyUse.Automation.Abstractions.UiWait;
+using UiWaitOptions = EasyUse.Automation.Abstractions.UiWaitOptions;
 using FlaUICalendar = FlaUI.Core.AutomationElements.Calendar;
 using FlaUI.Core;
 using FlaUI.Core.Definitions;
 using FlaUI.Core.Exceptions;
 using FlaUI.Core.AutomationElements;
 using FlaUI.EasyUse.PageObjects;
-using FlaUI.EasyUse.Waiting;
 
 namespace FlaUI.EasyUse.Extensions;
 

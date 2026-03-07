@@ -8,21 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Headless" Version="11.3.7" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.7" />
-    <PackageReference Include="TUnit" Version="1.12.111" />
+    <PackageReference Include="Avalonia.Headless" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="TUnit" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DotnetDebug.UiTests.Authoring\DotnetDebug.UiTests.Authoring.csproj" />
+    <ProjectReference Include="..\..\src\EasyUse.Automation.Abstractions\EasyUse.Automation.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\EasyUse.TestHost\EasyUse.TestHost.csproj" />
     <ProjectReference Include="..\..\src\Avalonia.Headless.EasyUse\Avalonia.Headless.EasyUse.csproj" />
-    <ProjectReference Include="..\..\src\EasyUse.Session.Contracts\EasyUse.Session.Contracts.csproj" />
     <ProjectReference Include="..\..\src\EasyUse.TUnit.Core\EasyUse.TUnit.Core.csproj" />
-    <ProjectReference Include="..\..\src\Avalonia.Headless.EasyUse.Generators\Avalonia.Headless.EasyUse.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\..\src\DotnetDebug.Avalonia\DotnetDebug.Avalonia.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="..\DotnetDebug.UiTests.Shared\**\*.cs" />
   </ItemGroup>
 
 </Project>

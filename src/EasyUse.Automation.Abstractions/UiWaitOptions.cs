@@ -1,4 +1,4 @@
-namespace EasyUse.TUnit.Core.Waiting;
+namespace EasyUse.Automation.Abstractions;
 
 public sealed record UiWaitOptions
 {

@@ -8,12 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="TUnit" Version="1.12.111" />
+    <PackageReference Include="TUnit" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\DotnetDebug.Core\DotnetDebug.Core.csproj" />
+    <ProjectReference Include="..\..\src\EasyUse.Automation.Abstractions\EasyUse.Automation.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\EasyUse.Session.Contracts\EasyUse.Session.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\EasyUse.TestHost\EasyUse.TestHost.csproj" />
     <ProjectReference Include="..\..\src\EasyUse.TUnit.Core\EasyUse.TUnit.Core.csproj" />
   </ItemGroup>
 </Project>

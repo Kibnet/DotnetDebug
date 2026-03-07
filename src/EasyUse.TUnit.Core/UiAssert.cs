@@ -1,4 +1,4 @@
-using EasyUse.TUnit.Core.Waiting;
+using EasyUse.Automation.Abstractions;
 using TUnit.Assertions;
 using TUnit.Assertions.Extensions;
 

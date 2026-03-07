@@ -6,6 +6,5 @@
     <IsPackable>true</IsPackable>
     <PackageId>EasyUse.Session.Contracts</PackageId>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.0.0</Version>
   </PropertyGroup>
 </Project>

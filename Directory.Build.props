@@ -1,0 +1,14 @@
+<Project>
+  <Import Project="eng/Versions.props" Condition="Exists('$(MSBuildThisFileDirectory)eng/Versions.props')" />
+
+  <PropertyGroup>
+    <ImplicitUsings Condition="'$(ImplicitUsings)' == ''">enable</ImplicitUsings>
+    <Nullable Condition="'$(Nullable)' == ''">enable</Nullable>
+    <LangVersion Condition="'$(LangVersion)' == ''">latest</LangVersion>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' != ''">true</ContinuousIntegrationBuild>
+    <PackageVersion Condition="'$(IsPackable)' == 'true'">$(EasyUseVersion)$(EasyUsePrereleaseSuffix)</PackageVersion>
+  </PropertyGroup>
+</Project>

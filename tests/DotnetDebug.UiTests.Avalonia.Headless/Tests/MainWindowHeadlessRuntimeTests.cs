@@ -1,33 +1,24 @@
 using Avalonia.Headless.EasyUse.Session;
-using DotnetDebug.UiTests.FlaUI.EasyUse.Pages;
-using EasyUse.Session.Contracts;
+using DotnetDebug.UiTests.Authoring.Pages;
+using DotnetDebug.UiTests.Authoring.Tests.UIAutomationTests;
+using EasyUse.TestHost;
 using EasyUse.TUnit.Core;
+using Avalonia.Headless.EasyUse.Automation;
 using TUnit.Core;
 
-namespace DotnetDebug.UiTests.FlaUI.EasyUse.Tests.UIAutomationTests;
+namespace DotnetDebug.UiTests.Avalonia.Headless.Tests.UIAutomationTests;
 
 [InheritsTests]
 public sealed class MainWindowHeadlessRuntimeTests : MainWindowScenariosBase<MainWindowHeadlessRuntimeTests.HeadlessRuntimeSession>
 {
-    protected override DesktopProjectLaunchOptions CreateLaunchOptions()
+    protected override HeadlessRuntimeSession LaunchSession()
     {
-        return new DesktopProjectLaunchOptions
-        {
-            SolutionFileName = "DotnetDebug.sln",
-            ProjectRelativePath = Path.Combine("src", "DotnetDebug.Avalonia", "DotnetDebug.Avalonia.csproj"),
-            BuildConfiguration = "Debug",
-            TargetFramework = "net9.0"
-        };
-    }
-
-    protected override HeadlessRuntimeSession LaunchSession(DesktopProjectLaunchOptions options)
-    {
-        return new HeadlessRuntimeSession(DesktopAppSession.LaunchFromProject(options));
+        return new HeadlessRuntimeSession(DesktopAppSession.Launch(DotnetDebugAppLaunchHost.CreateHeadlessLaunchOptions()));
     }
 
     protected override MainWindowPage CreatePage(HeadlessRuntimeSession session)
     {
-        return new MainWindowPage(session.Inner.MainWindow, session.Inner.ConditionFactory);
+        return new MainWindowPage(new HeadlessControlResolver(session.Inner.MainWindow));
     }
 
     public sealed class HeadlessRuntimeSession : IUiTestSession

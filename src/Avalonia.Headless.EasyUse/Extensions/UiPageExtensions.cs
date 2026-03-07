@@ -1,5 +1,7 @@
 using System.Globalization;
 using System.Linq.Expressions;
+using UiWait = EasyUse.Automation.Abstractions.UiWait;
+using UiWaitOptions = EasyUse.Automation.Abstractions.UiWaitOptions;
 using FlaUICalendar = FlaUI.Core.AutomationElements.Calendar;
 using FlaUI.Core.AutomationElements;
 using FlaUI.EasyUse.PageObjects;
@@ -559,10 +561,10 @@ public static class UiPageExtensions
             }
 
             combo.Select(index);
-            return FlaUI.EasyUse.Waiting.UiWait.TryUntil(
+            return UiWait.TryUntil(
                 () => combo.SelectedIndex,
                 actualIndex => actualIndex == index,
-                new FlaUI.EasyUse.Waiting.UiWaitOptions { Timeout = TimeSpan.FromMilliseconds(timeoutMs) }).Success;
+                new UiWaitOptions { Timeout = TimeSpan.FromMilliseconds(timeoutMs) }).Success;
         }
 
         return false;
@@ -591,10 +593,10 @@ public static class UiPageExtensions
     private static bool WaitUntilSpinnerTextEquals(TextBox textBox, double expected, int timeoutMs)
     {
         var expectedText = expected.ToString(CultureInfo.InvariantCulture);
-        var waitResult = FlaUI.EasyUse.Waiting.UiWait.TryUntil(
+        var waitResult = UiWait.TryUntil(
             () => textBox.Text,
             actual => string.Equals(actual?.Trim(), expectedText, StringComparison.Ordinal),
-            new FlaUI.EasyUse.Waiting.UiWaitOptions { Timeout = TimeSpan.FromMilliseconds(timeoutMs) });
+            new UiWaitOptions { Timeout = TimeSpan.FromMilliseconds(timeoutMs) });
 
         return waitResult.Success;
     }

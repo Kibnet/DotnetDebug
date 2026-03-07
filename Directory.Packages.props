@@ -1,0 +1,21 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageVersion Include="Avalonia" Version="11.3.7" />
+    <PackageVersion Include="Avalonia.Controls.DataGrid" Version="11.3.7" />
+    <PackageVersion Include="Avalonia.Desktop" Version="11.3.7" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.7" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.3.7" />
+    <PackageVersion Include="Avalonia.Headless" Version="11.3.7" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.3.7" />
+    <PackageVersion Include="FlaUI.Core" Version="5.0.0" />
+    <PackageVersion Include="FlaUI.UIA3" Version="5.0.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
+    <PackageVersion Include="TUnit" Version="1.12.111" />
+    <PackageVersion Include="TUnit.Assertions" Version="1.12.111" />
+    <PackageVersion Include="TUnit.Core" Version="1.12.111" />
+  </ItemGroup>
+</Project>

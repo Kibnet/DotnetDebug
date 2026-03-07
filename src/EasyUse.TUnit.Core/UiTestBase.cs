@@ -1,4 +1,3 @@
-using EasyUse.Session.Contracts;
 using TUnit.Core;
 
 namespace EasyUse.TUnit.Core;
@@ -18,16 +17,14 @@ public abstract class UiTestBase<TSession, TPage>
     protected TPage Page =>
         _page ?? throw new InvalidOperationException("Page is not initialized.");
 
-    protected abstract DesktopProjectLaunchOptions CreateLaunchOptions();
-
-    protected abstract TSession LaunchSession(DesktopProjectLaunchOptions options);
+    protected abstract TSession LaunchSession();
 
     protected abstract TPage CreatePage(TSession session);
 
     [Before(Test)]
     public void SetupUiSession()
     {
-        _session = LaunchSession(CreateLaunchOptions());
+        _session = LaunchSession();
         _page = CreatePage(_session);
     }
 

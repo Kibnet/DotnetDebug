@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace FlaUI.EasyUse.Waiting;
+namespace EasyUse.Automation.Abstractions;
 
 public static class UiWait
 {

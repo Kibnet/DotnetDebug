@@ -1,9 +1,10 @@
-using FlaUI.Core.AutomationElements;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using UiWait = EasyUse.Automation.Abstractions.UiWait;
+using UiWaitOptions = EasyUse.Automation.Abstractions.UiWaitOptions;
+using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Definitions;
-using FlaUI.EasyUse.Waiting;
 
 namespace FlaUI.EasyUse.Extensions;
 

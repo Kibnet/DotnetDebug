@@ -11,20 +11,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FlaUI.Core" Version="5.0.0" />
-    <PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
-    <PackageReference Include="TUnit" Version="1.12.111" />
+    <PackageReference Include="FlaUI.Core" />
+    <PackageReference Include="FlaUI.UIA3" />
+    <PackageReference Include="TUnit" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DotnetDebug.UiTests.Authoring\DotnetDebug.UiTests.Authoring.csproj" />
+    <ProjectReference Include="..\..\src\EasyUse.Automation.Abstractions\EasyUse.Automation.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\EasyUse.TestHost\EasyUse.TestHost.csproj" />
     <ProjectReference Include="..\..\src\FlaUI.EasyUse\FlaUI.EasyUse.csproj" />
-    <ProjectReference Include="..\..\src\EasyUse.Session.Contracts\EasyUse.Session.Contracts.csproj" />
     <ProjectReference Include="..\..\src\EasyUse.TUnit.Core\EasyUse.TUnit.Core.csproj" />
-    <ProjectReference Include="..\..\src\FlaUI.EasyUse.Generators\FlaUI.EasyUse.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="..\DotnetDebug.UiTests.Shared\**\*.cs" />
   </ItemGroup>
 
 </Project>
