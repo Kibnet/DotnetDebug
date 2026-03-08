@@ -1,0 +1,294 @@
+[CmdletBinding()]
+param(
+    [string]$Configuration = "Release",
+    [string]$PackagesPath,
+    [string]$WorkspaceRoot,
+    [switch]$SkipPack,
+    [switch]$KeepWorkspace
+)
+
+$ErrorActionPreference = "Stop"
+
+function Get-RepoRoot {
+    return [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot ".."))
+}
+
+function Get-FullVersion {
+    param([string]$RepoRoot)
+
+    [xml]$versions = Get-Content -Raw (Join-Path $RepoRoot "eng\Versions.props")
+    return "$($versions.Project.PropertyGroup.EasyUseVersion)$($versions.Project.PropertyGroup.EasyUsePrereleaseSuffix)"
+}
+
+function Invoke-Dotnet {
+    param(
+        [string]$WorkingDirectory,
+        [string[]]$Arguments
+    )
+
+    Push-Location $WorkingDirectory
+    try {
+        & dotnet @Arguments
+        if ($LASTEXITCODE -ne 0) {
+            throw "dotnet $($Arguments -join ' ') failed."
+        }
+    }
+    finally {
+        Pop-Location
+    }
+}
+
+$repoRoot = Get-RepoRoot
+$version = Get-FullVersion -RepoRoot $repoRoot
+
+if ([string]::IsNullOrWhiteSpace($PackagesPath)) {
+    $PackagesPath = Join-Path $repoRoot "artifacts\packages\$version"
+}
+
+if (-not (Test-Path $PackagesPath)) {
+    if ($SkipPack) {
+        throw "Packages path was not found: $PackagesPath"
+    }
+
+    Write-Host "Packages were not found at $PackagesPath. Running eng/pack.ps1 first."
+    & (Join-Path $PSScriptRoot "pack.ps1") -Configuration $Configuration
+    if ($LASTEXITCODE -ne 0) {
+        throw "eng/pack.ps1 failed while preparing smoke packages."
+    }
+}
+
+if ([string]::IsNullOrWhiteSpace($WorkspaceRoot)) {
+    $WorkspaceRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("AppAutomationSmoke-" + [System.Guid]::NewGuid().ToString("N"))
+}
+
+New-Item -ItemType Directory -Path $WorkspaceRoot -Force | Out-Null
+
+$authoringProjectDir = Join-Path $WorkspaceRoot "Smoke.Authoring"
+$runtimeProjectDir = Join-Path $WorkspaceRoot "Smoke.Headless.Tests"
+New-Item -ItemType Directory -Path (Join-Path $authoringProjectDir "Pages") -Force | Out-Null
+New-Item -ItemType Directory -Path (Join-Path $authoringProjectDir "Tests") -Force | Out-Null
+New-Item -ItemType Directory -Path $runtimeProjectDir -Force | Out-Null
+
+$nugetConfig = Join-Path $WorkspaceRoot "NuGet.Config"
+$globalJsonPath = Join-Path $WorkspaceRoot "global.json"
+$solutionPath = Join-Path $WorkspaceRoot "Smoke.AppAutomation.sln"
+$authoringProjectPath = Join-Path $authoringProjectDir "Smoke.Authoring.csproj"
+$runtimeProjectPath = Join-Path $runtimeProjectDir "Smoke.Headless.Tests.csproj"
+
+@"
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <clear />
+    <add key="local-appautomation" value="$PackagesPath" />
+    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+  </packageSources>
+</configuration>
+"@ | Set-Content -Path $nugetConfig -Encoding UTF8
+
+Copy-Item -Path (Join-Path $repoRoot "global.json") -Destination $globalJsonPath -Force
+
+@"
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AppAutomation.Abstractions" Version="$version" />
+    <PackageReference Include="AppAutomation.Authoring" Version="$version" />
+    <PackageReference Include="AppAutomation.TUnit" Version="$version" />
+    <PackageReference Include="TUnit.Assertions" Version="1.12.111" />
+    <PackageReference Include="TUnit.Core" Version="1.12.111" />
+  </ItemGroup>
+</Project>
+"@ | Set-Content -Path $authoringProjectPath -Encoding UTF8
+
+@"
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AppAutomation.Abstractions" Version="$version" />
+    <PackageReference Include="AppAutomation.Avalonia.Headless" Version="$version" />
+    <PackageReference Include="AppAutomation.TUnit" Version="$version" />
+    <PackageReference Include="TUnit" Version="1.12.111" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Smoke.Authoring\Smoke.Authoring.csproj" />
+  </ItemGroup>
+</Project>
+"@ | Set-Content -Path $runtimeProjectPath -Encoding UTF8
+
+@"
+using AppAutomation.Abstractions;
+
+namespace Smoke.Authoring.Pages;
+
+[UiControl("Input", UiControlType.TextBox, "Input")]
+[UiControl("SubmitButton", UiControlType.Button, "SubmitButton")]
+public sealed partial class SmokePage : UiPage
+{
+    public SmokePage(IUiControlResolver resolver) : base(resolver)
+    {
+    }
+}
+"@ | Set-Content -Path (Join-Path $authoringProjectDir "Pages\SmokePage.cs") -Encoding UTF8
+
+@"
+using Smoke.Authoring.Pages;
+using AppAutomation.TUnit;
+using TUnit.Assertions;
+using TUnit.Core;
+
+namespace Smoke.Authoring.Tests;
+
+public abstract class SmokeScenariosBase<TSession> : UiTestBase<TSession, SmokePage>
+    where TSession : class, IUiTestSession
+{
+    [Test]
+    public async Task Generated_members_are_available()
+    {
+        await Assert.That(Page.Input.AutomationId).IsEqualTo("Input");
+        await Assert.That(Page.SubmitButton.AutomationId).IsEqualTo("SubmitButton");
+    }
+}
+"@ | Set-Content -Path (Join-Path $authoringProjectDir "Tests\SmokeScenariosBase.cs") -Encoding UTF8
+
+@"
+using Smoke.Authoring.Generated;
+using Smoke.Authoring.Pages;
+using Smoke.Authoring.Tests;
+using AppAutomation.Abstractions;
+using AppAutomation.TUnit;
+using TUnit.Core;
+
+namespace Smoke.Headless.Tests;
+
+[InheritsTests]
+public sealed class SmokeHeadlessRuntimeTests : SmokeScenariosBase<SmokeHeadlessRuntimeTests.FakeSession>
+{
+    private static readonly Type HeadlessSessionType = typeof(AppAutomation.Avalonia.Headless.Session.DesktopAppSession);
+
+    protected override FakeSession LaunchSession()
+    {
+        var manifest = new SmokeAuthoringManifestProvider().GetManifest();
+        if (manifest.Pages.Count != 1 || manifest.Pages[0].Controls.Count != 2)
+        {
+            throw new InvalidOperationException("Generated manifest was not produced from NuGet source generator.");
+        }
+
+        return new FakeSession();
+    }
+
+    protected override SmokePage CreatePage(FakeSession session)
+    {
+        return new SmokePage(new FakeResolver());
+    }
+
+    public sealed class FakeSession : IUiTestSession
+    {
+        public void Dispose()
+        {
+        }
+    }
+
+    private sealed class FakeResolver : IUiControlResolver
+    {
+        private readonly Dictionary<string, object> _controls = new(StringComparer.Ordinal)
+        {
+            ["Input"] = new FakeTextBox("Input"),
+            ["SubmitButton"] = new FakeButton("SubmitButton")
+        };
+
+        public UiRuntimeCapabilities Capabilities { get; } = new("smoke-headless");
+
+        public TControl Resolve<TControl>(UiControlDefinition definition)
+            where TControl : class
+        {
+            if (_controls.TryGetValue(definition.PropertyName, out var control) && control is TControl typed)
+            {
+                return typed;
+            }
+
+            throw new InvalidOperationException($"Control '{definition.PropertyName}' was not registered.");
+        }
+    }
+
+    private abstract class FakeControl : IUiControl
+    {
+        protected FakeControl(string automationId)
+        {
+            AutomationId = automationId;
+            Name = automationId;
+        }
+
+        public string AutomationId { get; }
+
+        public string Name { get; protected set; }
+
+        public bool IsEnabled => true;
+    }
+
+    private sealed class FakeTextBox : FakeControl, ITextBoxControl
+    {
+        public FakeTextBox(string automationId) : base(automationId)
+        {
+            Text = string.Empty;
+        }
+
+        public string Text { get; set; }
+
+        public void Enter(string value)
+        {
+            Text = value;
+        }
+    }
+
+    private sealed class FakeButton : FakeControl, IButtonControl
+    {
+        public FakeButton(string automationId) : base(automationId)
+        {
+        }
+
+        public void Invoke()
+        {
+        }
+    }
+}
+"@ | Set-Content -Path (Join-Path $runtimeProjectDir "SmokeHeadlessRuntimeTests.cs") -Encoding UTF8
+
+Invoke-Dotnet -WorkingDirectory $WorkspaceRoot -Arguments @("new", "sln", "--name", "Smoke.AppAutomation", "--format", "sln")
+Invoke-Dotnet -WorkingDirectory $WorkspaceRoot -Arguments @("sln", $solutionPath, "add", $authoringProjectPath)
+Invoke-Dotnet -WorkingDirectory $WorkspaceRoot -Arguments @("sln", $solutionPath, "add", $runtimeProjectPath)
+Invoke-Dotnet -WorkingDirectory $WorkspaceRoot -Arguments @("restore", $solutionPath)
+Invoke-Dotnet -WorkingDirectory $WorkspaceRoot -Arguments @("build", $solutionPath, "-c", $Configuration, "--no-restore")
+
+Write-Host "Consumer smoke succeeded. Workspace: $WorkspaceRoot"
+
+if (-not $KeepWorkspace) {
+    $removed = $false
+    for ($attempt = 0; $attempt -lt 3 -and -not $removed; $attempt++) {
+        Start-Sleep -Seconds 2
+        try {
+            Remove-Item -Path $WorkspaceRoot -Recurse -Force
+            $removed = $true
+        }
+        catch {
+        }
+    }
+
+    if (-not $removed) {
+        Write-Host "Temporary smoke workspace was left on disk: $WorkspaceRoot"
+    }
+}
