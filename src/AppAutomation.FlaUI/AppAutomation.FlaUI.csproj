@@ -4,13 +4,10 @@
     <TargetFramework>net8.0-windows7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <IsPackable>true</IsPackable>
     <PackageId>AppAutomation.FlaUI</PackageId>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Description>Reusable utilities for desktop UI automation with FlaUI.</Description>
-    <Authors>DotnetDebug</Authors>
-    <RepositoryUrl>https://github.com</RepositoryUrl>
     <PackageTags>flaui;uiautomation;desktop;testing</PackageTags>
   </PropertyGroup>
 

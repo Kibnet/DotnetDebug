@@ -5,8 +5,6 @@
     <PackageId>AppAutomation.Abstractions</PackageId>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>Adapter-neutral automation contracts, authoring primitives and diagnostics for AppAutomation.</Description>
-    <Authors>DotnetDebug</Authors>
-    <RepositoryUrl>https://github.com</RepositoryUrl>
     <PackageTags>automation;ui-testing;desktop;contracts</PackageTags>
   </PropertyGroup>
 </Project>

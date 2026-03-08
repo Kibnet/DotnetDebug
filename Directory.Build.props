@@ -9,6 +9,5 @@
     <AnalysisLevel>latest-recommended</AnalysisLevel>
     <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild Condition="'$(CI)' != ''">true</ContinuousIntegrationBuild>
-    <PackageVersion Condition="'$(IsPackable)' == 'true'">$(EasyUseVersion)$(EasyUsePrereleaseSuffix)</PackageVersion>
   </PropertyGroup>
 </Project>

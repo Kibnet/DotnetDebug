@@ -7,6 +7,8 @@
     <IsPackable>true</IsPackable>
     <PackageId>AppAutomation.TUnit</PackageId>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Description>Runtime-agnostic TUnit base classes and assertions for AppAutomation UI tests.</Description>
+    <PackageTags>automation;ui-testing;tunit;testing</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

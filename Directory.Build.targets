@@ -1,0 +1,22 @@
+<Project>
+  <PropertyGroup Condition="'$(IsPackable)' == 'true'">
+    <Version>$(EasyUseVersion)$(EasyUsePrereleaseSuffix)</Version>
+    <PackageVersion>$(EasyUseVersion)$(EasyUsePrereleaseSuffix)</PackageVersion>
+    <Authors>DotnetDebug</Authors>
+    <RepositoryUrl>https://github.com/Kibnet/DotnetDebug</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/Kibnet/DotnetDebug</PackageProjectUrl>
+    <PackageReadmeFile>PACKAGE_README.md</PackageReadmeFile>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(IsPackable)' == 'true' and Exists('$(MSBuildThisFileDirectory)docs\\appautomation\\PACKAGE_README.md')">
+    <None Include="$(MSBuildThisFileDirectory)docs\\appautomation\\PACKAGE_README.md"
+          Pack="true"
+          PackagePath=""
+          Link="PACKAGE_README.md"
+          Visible="false" />
+  </ItemGroup>
+</Project>

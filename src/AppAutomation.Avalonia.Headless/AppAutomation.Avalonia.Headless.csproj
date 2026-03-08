@@ -6,6 +6,8 @@
     <IsPackable>true</IsPackable>
     <PackageId>AppAutomation.Avalonia.Headless</PackageId>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Description>Headless in-process Avalonia runtime adapter for AppAutomation UI tests.</Description>
+    <PackageTags>avalonia;headless;automation;ui-testing</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
