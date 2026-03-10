@@ -20,6 +20,18 @@ public sealed class VersioningScriptsTests
     }
 
     [Test]
+    public async Task ResolvePackageVersion_ParsesBareReleaseTag()
+    {
+        var result = InvokePowerShellScript("-Tag", "2.1.0");
+
+        using (Assert.Multiple())
+        {
+            await Assert.That(result.ExitCode).IsEqualTo(0);
+            await Assert.That(result.StandardOutput.Trim()).IsEqualTo("2.1.0");
+        }
+    }
+
+    [Test]
     public async Task ResolvePackageVersion_UsesExplicitVersion()
     {
         var result = InvokePowerShellScript("-Version", "2.1.0");
@@ -46,12 +58,12 @@ public sealed class VersioningScriptsTests
     [Test]
     public async Task ResolvePackageVersion_RejectsInvalidTag()
     {
-        var result = InvokePowerShellScript("-Tag", "2.1.0");
+        var result = InvokePowerShellScript("-Tag", "release-2.1.0");
 
         using (Assert.Multiple())
         {
             await Assert.That(result.ExitCode == 0).IsEqualTo(false);
-            await Assert.That(result.CombinedOutput).Contains("appautomation-v");
+            await Assert.That(result.CombinedOutput).Contains("must be '<version>' or 'appautomation-v<version>'");
         }
     }
 

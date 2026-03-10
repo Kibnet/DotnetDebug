@@ -79,7 +79,7 @@ pwsh -File eng/publish-nuget.ps1 -Source https://api.nuget.org/v3/index.json -Ap
 
 - workflow: `.github/workflows/publish-packages.yml`;
 - ручной запуск: `workflow_dispatch`;
-- автоматическая публикация: GitHub Release с tag `appautomation-v<version>`;
+- автоматическая публикация: GitHub Release с tag `<version>` или `appautomation-v<version>`;
 - версия пакетов в CI берётся из release tag.
 
 ## Demo AUT

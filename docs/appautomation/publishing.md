@@ -12,7 +12,7 @@
 
 В GitHub Actions production source of truth другой:
 
-- GitHub Release tag `appautomation-v<version>`
+- GitHub Release tag `<version>` или `appautomation-v<version>`
 
 При публикации через `release.published` package version берётся из tag релиза и явно прокидывается в scripts.
 
@@ -110,4 +110,4 @@ pwsh -File eng/pack.ps1 -Configuration Release
 pwsh -File eng/smoke-consumer.ps1 -Configuration Release
 ```
 
-Только после этого есть смысл публиковать GitHub Release с tag `appautomation-v<version>` или запускать manual publish workflow с явным `version`.
+Только после этого есть смысл публиковать GitHub Release с tag `<version>` или `appautomation-v<version>`, либо запускать manual publish workflow с явным `version`.

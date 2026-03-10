@@ -43,12 +43,17 @@ function Convert-AppAutomationReleaseTagToVersion {
     }
 
     $normalizedTag = $Tag.Trim()
-    if (-not $normalizedTag.StartsWith($releasePrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
-        throw "Release tag '$normalizedTag' must start with '$releasePrefix'."
+    if ($normalizedTag.StartsWith($releasePrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+        $resolvedVersion = $normalizedTag.Substring($releasePrefix.Length)
+        return Assert-AppAutomationVersion -Version $resolvedVersion
     }
 
-    $resolvedVersion = $normalizedTag.Substring($releasePrefix.Length)
-    return Assert-AppAutomationVersion -Version $resolvedVersion
+    try {
+        return Assert-AppAutomationVersion -Version $normalizedTag
+    }
+    catch {
+        throw "Release tag '$normalizedTag' must be '<version>' or '$releasePrefix<version>'."
+    }
 }
 
 function Resolve-AppAutomationVersion {
