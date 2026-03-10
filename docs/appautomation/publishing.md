@@ -97,8 +97,8 @@ Pipeline делает:
 
 ```powershell
 dotnet restore
-dotnet build DotnetDebug.sln -c Release
-dotnet test --solution DotnetDebug.sln -c Release
+dotnet build AppAutomation.sln -c Release
+dotnet test --solution AppAutomation.sln -c Release
 pwsh -File eng/pack.ps1 -Configuration Release
 pwsh -File eng/smoke-consumer.ps1 -Configuration Release
 ```

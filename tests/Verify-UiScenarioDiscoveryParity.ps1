@@ -1,6 +1,6 @@
 param(
-    [string]$HeadlessProject = "tests/DotnetDebug.UiTests.Avalonia.Headless/DotnetDebug.UiTests.Avalonia.Headless.csproj",
-    [string]$FlaUiProject = "tests/DotnetDebug.UiTests.FlaUI.EasyUse/DotnetDebug.UiTests.FlaUI.EasyUse.csproj",
+    [string]$HeadlessProject = "tests/AppAutomation.UiTests.Avalonia.Headless/AppAutomation.UiTests.Avalonia.Headless.csproj",
+    [string]$FlaUiProject = "tests/AppAutomation.UiTests.FlaUI.EasyUse/AppAutomation.UiTests.FlaUI.EasyUse.csproj",
     [string]$ArtifactsDirectory = "artifacts"
 )
 

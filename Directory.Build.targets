@@ -2,10 +2,10 @@
   <PropertyGroup Condition="'$(IsPackable)' == 'true'">
     <Version>$(EasyUseVersion)$(EasyUsePrereleaseSuffix)</Version>
     <PackageVersion>$(EasyUseVersion)$(EasyUsePrereleaseSuffix)</PackageVersion>
-    <Authors>DotnetDebug</Authors>
-    <RepositoryUrl>https://github.com/Kibnet/DotnetDebug</RepositoryUrl>
+    <Authors>AppAutomation</Authors>
+    <RepositoryUrl>https://github.com/Kibnet/AppAutomation</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageProjectUrl>https://github.com/Kibnet/DotnetDebug</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Kibnet/AppAutomation</PackageProjectUrl>
     <PackageReadmeFile>PACKAGE_README.md</PackageReadmeFile>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>

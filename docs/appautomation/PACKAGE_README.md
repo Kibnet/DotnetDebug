@@ -18,6 +18,6 @@ Recommended test-solution topology:
 
 Full setup guide:
 
-- Quickstart: https://github.com/Kibnet/DotnetDebug/blob/main/docs/appautomation/quickstart.md
-- Project topology: https://github.com/Kibnet/DotnetDebug/blob/main/docs/appautomation/project-topology.md
-- Publishing: https://github.com/Kibnet/DotnetDebug/blob/main/docs/appautomation/publishing.md
+- Quickstart: https://github.com/Kibnet/AppAutomation/blob/main/docs/appautomation/quickstart.md
+- Project topology: https://github.com/Kibnet/AppAutomation/blob/main/docs/appautomation/project-topology.md
+- Publishing: https://github.com/Kibnet/AppAutomation/blob/main/docs/appautomation/publishing.md

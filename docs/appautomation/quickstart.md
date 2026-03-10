@@ -219,7 +219,7 @@ public sealed class MainWindowHeadlessTests : MainWindowScenariosBase<MainWindow
 - формировать `DesktopAppLaunchOptions` / `HeadlessAppLaunchOptions`;
 - подготавливать temp dirs, test data или isolated settings;
 
-выносите это в отдельный repo-only project, аналогичный `src/DotnetDebug.AppAutomation.TestHost`.
+выносите это в отдельный repo-only project, аналогичный `src/AppAutomation.AppAutomation.TestHost`.
 
 ### Пример desktop launch options с аргументами и env vars
 
