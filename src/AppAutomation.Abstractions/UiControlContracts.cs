@@ -58,7 +58,7 @@ public interface IComboBoxControl : IUiControl
 
     int SelectedIndex { get; set; }
 
-    void Select(int index);
+    void SelectByIndex(int index);
 
     void Expand();
 }
@@ -75,7 +75,7 @@ public interface ISearchPickerControl : IUiControl
 
     void Expand();
 
-    void Select(string itemText);
+    void SelectItem(string itemText);
 }
 
 public interface IRadioButtonControl : IUiControl
@@ -121,7 +121,7 @@ public interface ITabItemControl : IUiControl
 {
     bool IsSelected { get; }
 
-    void Select();
+    void SelectTab();
 }
 
 public interface ITabControl : IUiControl
