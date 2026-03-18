@@ -44,9 +44,9 @@ public sealed class AdvancedScenarioTests
     [Test]
     [Arguments("12 18", "GCD", "GCD = 6")]
     [Arguments("4 6 8", "LCM", "LCM = 24")]
-    [Arguments("5 3 8", "MAX", "MAX = 8")]
+    [Arguments("5 3 8", "GCD", "GCD = 1")]
     [Arguments("5 3 8", "MIN", "MIN = 3")]
-    [Arguments("10 20 30", "SUM", "SUM = 60")]
+    [Arguments("10 20 30", "LCM", "LCM = 60")]
     [NotInParallel("DesktopUi")]
     public async Task Calculate_DataDriven_ProducesExpectedResult(
         string inputNumbers,
@@ -335,7 +335,7 @@ public sealed class AdvancedScenarioTests
     [Test]
     [Arguments("abc def", "Invalid integer: abc")]
     [Arguments("12.5 18", "Invalid integer: 12.5")]
-    [Arguments("", "Input must not be empty")]
+    [Arguments("", "Provide at least one integer")]
     [NotInParallel("DesktopUi")]
     public async Task Validation_InvalidInput_ShowsExpectedError(
         string invalidInput,
